@@ -9,9 +9,11 @@
   		<listener class-name="base.TestListener"/>    
   	</listeners>
 	
-  	<test thread-count="5" name="Test">
+  	<test thread-count="1" name="Test">
     	<classes>
       		<class name="com.test.planit.TestCase1"/>
+      		<class name="com.test.planit.TestCase2"/>
+      		<class name="com.test.planit.TestCase3"/>
     	</classes>
   	</test> <!-- Test -->
   	
