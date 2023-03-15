@@ -36,19 +36,20 @@ public class TestBaseSetup extends InitializeLogging{
 		default:
 			System.out.println("browser : " + browserType
 					+ " is invalid, Launching Firefox as a default");
-			driver = initFirefoxDriver(appURL);
+					driver = initFirefoxDriver(appURL);
 		}
 	}
 	
 	private static WebDriver initChromeDriver(String appURL) {
 		
-		System.out.println("Launching google chrome");
+		log.info("Launching google chrome");
 		
-		// Set which browser to use
 		ChromeOptions cOptions = new ChromeOptions();
 		cOptions.addArguments("--start-maximized");
 		DesiredCapabilities capabilities = DesiredCapabilities.chrome();
 		capabilities.setCapability(ChromeOptions.CAPABILITY, cOptions);
+		
+		// When Page Loading takes too much time and you need to stop downloading additional subresources (normal, eager, none)
 		capabilities.setCapability("pageLoadStrategy", "none");
 		WebDriverManager.chromedriver().setup();
 		
