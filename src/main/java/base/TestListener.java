@@ -10,6 +10,7 @@ import org.openqa.selenium.WebDriver;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
+import static base.InitializeLogging.*;
 
 public class TestListener implements ITestListener {
 
@@ -17,7 +18,7 @@ public class TestListener implements ITestListener {
 		
 	@Override
 	public void onTestFailure(ITestResult result) {
-    	System.out.println("***** Error " + result.getName() + " test has failed *****");
+    	log.error("***** ERROR: " + result.getName() + " has FAILED *****");
     	
     	// Accessing the driver object that we added in the setUp method
     	String methodName = result.getName().toString().trim();    	
@@ -33,7 +34,7 @@ public class TestListener implements ITestListener {
         // The below method will save the screen shot in the report folder under class with test method name 
    	 	try {
 			FileUtils.copyFile(screenShotFile, new File(filePath + methodName + ".png"));
-			System.out.println(" *** Placed screen shot in "+ filePath + " ***");				
+			log.info(" *** Placed screen shot in "+ filePath + " ***");				
 		} catch (IOException e) {				
 			e.printStackTrace();
 		}

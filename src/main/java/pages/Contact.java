@@ -20,6 +20,10 @@ public class Contact {
 	@FindBy(xpath = "//textarea[@id='message']") WebElement messageElement;
 	@FindBy(xpath = "//body") WebElement formErrorElement;
 	@FindBy(xpath = "//div[@class='alert alert-success']") WebElement alertSuccessElement;
+	@FindBy(xpath = "//span[@id='forename-err']") WebElement forenameError;
+	@FindBy(xpath = "//span[@id='email-err']") WebElement emailError;
+	@FindBy(xpath = "//span[@id='message-err']") WebElement messageError;
+
 	
 	public Contact() {
 		
@@ -64,10 +68,28 @@ public class Contact {
 		return strMessage;		
 	}
 	
+	public String errMsg_foreName() {
+		SeleniumUtilities util = new SeleniumUtilities(driver);
+		String strMessage = util.waitForElement(forenameError, 10).getText();
+		return strMessage;		
+	}
+	
 	public String alertMsg_ContactForm() {
 		SeleniumUtilities util = new SeleniumUtilities(driver);
 		String strMessage = util.waitForElement(alertSuccessElement, 25).getText();
 		return strMessage;		
+	}
+
+	public String errMsg_email() {
+		SeleniumUtilities util = new SeleniumUtilities(driver);
+		String strMessage = util.waitForElement(emailError, 10).getText();
+		return strMessage;	
+	}
+
+	public String errMsg_message() {
+		SeleniumUtilities util = new SeleniumUtilities(driver);
+		String strMessage = util.waitForElement(messageError, 10).getText();
+		return strMessage;
 	}
 	
 }

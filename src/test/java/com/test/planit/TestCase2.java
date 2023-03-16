@@ -1,43 +1,15 @@
 package com.test.planit;
 
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 import org.testng.annotations.BeforeMethod;
-import org.testng.AssertJUnit;
-import static org.testng.Assert.assertEquals;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-
-import javax.print.attribute.standard.PrinterLocation;
-
-import org.openqa.selenium.By;
-import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.events.EventFiringWebDriver;
-import org.openqa.selenium.support.ui.FluentWait;
-import org.openqa.selenium.support.ui.Wait;
-import org.testng.Assert;
 import org.testng.ITestContext;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeTest;
-import org.testng.annotations.Test;
-
-import base.EventListener;
 import base.TestBaseSetup;
 import base.TestListener;
-import helper.SeleniumUtilities;
-import net.bytebuddy.dynamic.scaffold.MethodRegistry.Handler.ForAbstractMethod;
 import pages.Contact;
 import pages.Home;
-import pages.Shop;
-
-import org.testng.annotations.Parameters;
-
 
 public class TestCase2 extends TestBaseSetup{
 	
@@ -57,6 +29,8 @@ public class TestCase2 extends TestBaseSetup{
 	@Test (invocationCount = 5)
 	public void testCase2() {		
 		
+		SoftAssert SAssert = new SoftAssert();
+		
 		// Establishing connection of two POMs
 		Home HP = new Home(driver);		
 		HP.click_HomeTab();
@@ -73,7 +47,9 @@ public class TestCase2 extends TestBaseSetup{
 		CP.click_Submit();
 		
 		// Validate successful submission message
-		AssertJUnit.assertFalse(CP.alertMsg_ContactForm().contains("Thanks test, we appreciate your feedback."));
+		SAssert.assertFalse(CP.alertMsg_ContactForm().contains("Thanks test, we appreciate your feedback."));
+		
+		SAssert.assertAll();
 		
 	}
 	

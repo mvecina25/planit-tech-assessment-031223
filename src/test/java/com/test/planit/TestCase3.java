@@ -1,43 +1,16 @@
 package com.test.planit;
 
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.AssertJUnit;
-import static org.testng.Assert.assertEquals;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-
-import javax.print.attribute.standard.PrinterLocation;
-
-import org.openqa.selenium.By;
-import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.events.EventFiringWebDriver;
-import org.openqa.selenium.support.ui.FluentWait;
-import org.openqa.selenium.support.ui.Wait;
-import org.testng.Assert;
 import org.testng.ITestContext;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeTest;
-import org.testng.annotations.Test;
-
-import base.EventListener;
 import base.TestBaseSetup;
 import base.TestListener;
-import helper.SeleniumUtilities;
-import net.bytebuddy.dynamic.scaffold.MethodRegistry.Handler.ForAbstractMethod;
-import pages.Contact;
 import pages.Home;
 import pages.Shop;
-
-import org.testng.annotations.Parameters;
-
 
 public class TestCase3 extends TestBaseSetup{
 	
@@ -53,7 +26,9 @@ public class TestCase3 extends TestBaseSetup{
 	}
 	
 	@Test
-	public void testCase4() {	
+	public void testCase3() {	
+		
+		SoftAssert SAssert = new SoftAssert();
 		
 		// Establishing connection of two POMs
 		Home HP = new Home(driver);		
@@ -79,7 +54,8 @@ public class TestCase3 extends TestBaseSetup{
 		if (SP.getText_ItemOne().contains("Stuffed Frog")) {
 			
 			// Verify the price for each product
-			AssertJUnit.assertTrue(SP.getText_ItemOnePrice().contains("$10.99"));
+			String expectedItemOnePrice = "$10.99";
+			SAssert.assertEquals(SP.getText_ItemOnePrice(), expectedItemOnePrice);
 			
 			// This will remove the dollar sign from Price
 			String productPrice = SP.getText_ItemOnePrice().substring(1);
@@ -104,16 +80,17 @@ public class TestCase3 extends TestBaseSetup{
 			Double expectedTotal = SP.convertStringToDouble(stotal);
 			
 			// Verify that each product’s sub total = product price * quantity
-			AssertJUnit.assertEquals(expectedTotal, actualTotal);
+			SAssert.assertEquals(expectedTotal, actualTotal);
 			
-			System.out.println("EXPECTED SUBTOTAL: " + expectedTotal + " | " + "ACTUAL SUBTOTAL: " + actualTotal);
+			log.info("EXPECTED SUBTOTAL: " + expectedTotal + " | " + "ACTUAL SUBTOTAL: " + actualTotal);
 			
 		}
 		
 		if (SP.getText_ItemTwo().contains("Fluffy Bunny")) {
 			
 			// Verify the price for each product
-			AssertJUnit.assertTrue(SP.getText_ItemTwoPrice().contains("$9.99"));
+			String expectedItemTwoPrice = "$9.99";
+			SAssert.assertEquals(SP.getText_ItemTwoPrice(), expectedItemTwoPrice);
 			
 			// This will remove the dollar sign from Price
 			String productPrice = SP.getText_ItemTwoPrice().substring(1);
@@ -138,15 +115,16 @@ public class TestCase3 extends TestBaseSetup{
 			Double expectedTotal = SP.convertStringToDouble(stotal);
 			
 			// Verify that each product’s sub total = product price * quantity
-			AssertJUnit.assertEquals(expectedTotal, actualTotal);
+			SAssert.assertEquals(expectedTotal, actualTotal);
 			
-			System.out.println("EXPECTED SUBTOTAL: " + expectedTotal + " | " + "ACTUAL SUBTOTAL: " + actualTotal);
+			log.info("EXPECTED SUBTOTAL: " + expectedTotal + " | " + "ACTUAL SUBTOTAL: " + actualTotal);
 		}
 		
 		if (SP.getText_ItemThree().contains("Valentine Bear")) {
 			
 			// Verify the price for each product
-			AssertJUnit.assertTrue(SP.getText_ItemThreePrice().contains("$14.99"));
+			String expectedItemThreePrice = "$14.999";
+			SAssert.assertEquals(SP.getText_ItemThreePrice(), expectedItemThreePrice);
 			
 			// This will remove the dollar sign from Price
 			String productPrice = SP.getText_ItemThreePrice().substring(1);
@@ -171,9 +149,9 @@ public class TestCase3 extends TestBaseSetup{
 			Double expectedTotal = SP.convertStringToDouble(stotal);
 			
 			// Verify that each product’s sub total = product price * quantity
-			AssertJUnit.assertEquals(expectedTotal, actualTotal);
+			SAssert.assertEquals(expectedTotal, actualTotal);
 			
-			System.out.println("EXPECTED SUBTOTAL: " + expectedTotal + " | " + "ACTUAL SUBTOTAL: " + actualTotal);
+			log.info("EXPECTED SUBTOTAL: " + expectedTotal + " | " + "ACTUAL SUBTOTAL: " + actualTotal);
 		}
 		
 		// This will remove the "Total:" text
@@ -196,9 +174,11 @@ public class TestCase3 extends TestBaseSetup{
 		Double actualSubTotal = SP.convertStringToDouble(subTotalItemOne) + SP.convertStringToDouble(subTotalItemTwo) + SP.convertStringToDouble(subTotalItemThree);
 		
 		// Verify that total = sum(sub totals)  
-		AssertJUnit.assertEquals(actualSubTotal, actualTotal);
+		SAssert.assertEquals(actualSubTotal, actualTotal);
 		
-		System.out.println("ACTUAL SUBTOTAL: " + actualSubTotal + " | " + "ACTUAL TOTAL: " + actualTotal);
+		log.info("ACTUAL SUBTOTAL: " + actualSubTotal + " | " + "ACTUAL TOTAL: " + actualTotal);
+		
+		SAssert.assertAll();
 	}
 	
 	

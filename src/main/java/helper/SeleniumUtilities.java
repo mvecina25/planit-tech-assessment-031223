@@ -17,9 +17,11 @@ import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import base.InitializeLogging;
 import base.TestBaseSetup;
 
-public class SeleniumUtilities {
+
+public class SeleniumUtilities extends InitializeLogging{
 
 	WebDriver driver;
 	
@@ -38,7 +40,7 @@ public class SeleniumUtilities {
 		WebDriverWait wait = new WebDriverWait(driver, timeout);
 
 		try {
-			System.out.println(elementLocator);
+			log.info(elementLocator);
 			webElement = wait.until(ExpectedConditions.visibilityOf(elementLocator));
 			
 		} catch (WebDriverException e) {
@@ -52,13 +54,14 @@ public class SeleniumUtilities {
 		return webElement;
 	}
 	
+	
 	public WebElement waitForElementToBeClickable(WebElement elementLocator, int timeout) {
 		
 		WebElement webElement = null;
 		WebDriverWait wait = new WebDriverWait(driver, timeout);
 
 		try {
-			System.out.println(elementLocator);
+			log.info(elementLocator);
 			webElement = wait.until(ExpectedConditions.elementToBeClickable(elementLocator));
 			
 		} catch (WebDriverException e) {
@@ -84,19 +87,19 @@ public class SeleniumUtilities {
 		
 		List<WebElement> productList = driver.findElements(By.cssSelector(cssSelector));
 		
-		System.out.println(productList.size());
+		log.info(productList.size());
 		
 		for (WebElement item: productList ) {
 				
 			String selectedItem = item.getText();
 			
-			System.out.println("THIS IS THE ELEMENT 1: " + selectedItem);
+			log.info("THIS IS THE ELEMENT 1: " + selectedItem);
 			
 			if (selectedItem.contains(itemName)) {   			
 				
 				if (selectedItem.contains(itemPrice)) {	
 					
-	            	System.out.println("THIS IS THE ELEMENT 2:" + selectedItem);
+	            	log.info("THIS IS THE ELEMENT 2:" + selectedItem);
 	            	
 	        		SeleniumUtilities util = new SeleniumUtilities(driver);
 	        		
