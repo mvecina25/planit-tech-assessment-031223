@@ -11,7 +11,7 @@
 -	Log4j for logging
 -	Screenshot and highlight the element when a test fails
 
-<img width="312" alt="image" src="https://user-images.githubusercontent.com/32367570/224570008-2b8856c6-1dbf-44f7-88dc-bd9a64dc65fd.png">
+![image](https://user-images.githubusercontent.com/32367570/225593775-d81f7e86-9dc0-4aa7-824a-44e6f294529e.png)
 
 **How to Run:**
 - **Download TestNG plugin. Click on ‘Help' and go to Eclipse Market Place.**
