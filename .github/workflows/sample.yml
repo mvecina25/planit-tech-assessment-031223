@@ -28,13 +28,4 @@ jobs:
           export DISPLAY=:0
           mvn test -Dtest=OpenChromeBrowser
 
-secrets:
-  SSH_PRIVATE_KEY:
-    # Your private key
-    # Base64-encoded string of the contents of the private key file
-  SSH_KNOWN_HOSTS:
-    # Your known_hosts file
-    # Base64-encoded string of the contents of the known_hosts file
-  SSH_PASSWORD:
-    # Your SSH password
-    # Encrypted secret created using the GitHub Actions secret feature
+
