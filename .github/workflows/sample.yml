@@ -1,29 +1,26 @@
-name: Open Chrome Browser on Local Machine
+name: Run Java program on local machine
 
 on:
   workflow_dispatch:
 
 jobs:
-  open_chrome_browser:
+  run_java_program:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+    - name: Setup SSH
+      uses: webfactory/ssh-agent@v0.4.1
+      with:
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+        ssh-known-hosts: ${{ secrets.SSH_KNOWN_HOSTS }}
 
-    - name: Connect to Local Machine with SSH
+    - name: Connect to Local Machine
       uses: appleboy/ssh-action@master
       with:
         host: 192.168.0.14
         username: medelvecina
         password: ${{ secrets.SSH_PASSWORD }}
         script: |
-          ssh-keyscan -t rsa 192.168.0.14 >> ~/.ssh/known_hosts
-          sshpass -p "${{ secrets.SSH_PASSWORD }}" ssh -o StrictHostKeyChecking=no medelvecina@192.168.0.14 '
-            cd /Users/medelvecina/Documents/eclipse-workspace/planit-tech-assessment-031223
-            export DISPLAY=:0
-            mvn test -Dtestngpath="testng.xml"
-          '
-
-    env:
-      SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
+          cd /Users/medelvecina/Documents/eclipse-workspace/planit-tech-assessment-031223
+          export DISPLAY=:0
+          mvn test -Dtestngpath="testng.xml"
