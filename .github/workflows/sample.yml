@@ -11,21 +11,19 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Setup SSH
-      uses: webfactory/ssh-agent@v0.4.1
-      with:
-        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-        ssh-known-hosts: ${{ secrets.SSH_KNOWN_HOSTS }}
-
-    - name: Connect to Local Machine
+    - name: Connect to Local Machine with SSH
       uses: appleboy/ssh-action@master
       with:
         host: 192.168.0.14
         username: medelvecina
         password: ${{ secrets.SSH_PASSWORD }}
         script: |
-          cd /Users/medelvecina/Documents/eclipse-workspace/planit-tech-assessment-031223
-          export DISPLAY=:0
-          mvn test -Dtest=OpenChromeBrowser
+          ssh-keyscan -t rsa 192.168.0.14 >> ~/.ssh/known_hosts
+          sshpass -p "${{ secrets.SSH_PASSWORD }}" ssh -o StrictHostKeyChecking=no medelvecina@192.168.0.14 '
+            cd /path/to/your/java/program
+            export DISPLAY=:0
+            mvn test -Dtest=OpenChromeBrowser
+          '
 
-
+    env:
+      SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
