@@ -1,27 +1,40 @@
-name: Selenium WebDriver Test
+name: Open Chrome Browser on Local Machine
 
-on: [workflow_dispatch]
+on:
+  workflow_dispatch:
 
 jobs:
-  build:
-    runs-on: macos-latest
+  open_chrome_browser:
+    runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-    - name: Set up JDK 11
-      uses: actions/setup-java@v2
+    - name: Setup SSH
+      uses: webfactory/ssh-agent@v0.4.1
       with:
-        java-version: '11'
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+        ssh-known-hosts: ${{ secrets.SSH_KNOWN_HOSTS }}
 
-    - name: Set up Chrome Driver
-      run: |
-        LATEST_CHROMEDRIVER_VERSION=$(curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE)
-        curl -sS -L "https://chromedriver.storage.googleapis.com/${LATEST_CHROMEDRIVER_VERSION}/chromedriver_mac64.zip" -o /tmp/chromedriver.zip
-        unzip /tmp/chromedriver.zip -d /usr/local/bin
+    - name: Connect to Local Machine
+      uses: appleboy/ssh-action@master
+      with:
+        host: 192.168.0.14
+        username: medelvecina
+        password: ${{ secrets.SSH_PASSWORD }}
+        script: |
+          cd /Users/medelvecina/Documents/eclipse-workspace/planit-tech-assessment-031223
+          export DISPLAY=:0
+          mvn test -Dtest=OpenChromeBrowser
 
-    - name: Build with Maven
-      run: mvn -B clean package
-
-    - name: Run Tests with TestNG
-      run: mvn test
+secrets:
+  SSH_PRIVATE_KEY:
+    # Your private key
+    # Base64-encoded string of the contents of the private key file
+  SSH_KNOWN_HOSTS:
+    # Your known_hosts file
+    # Base64-encoded string of the contents of the known_hosts file
+  SSH_PASSWORD:
+    # Your SSH password
+    # Encrypted secret created using the GitHub Actions secret feature
