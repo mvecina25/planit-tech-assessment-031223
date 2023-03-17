@@ -20,9 +20,9 @@ jobs:
         script: |
           ssh-keyscan -t rsa 192.168.0.14 >> ~/.ssh/known_hosts
           sshpass -p "${{ secrets.SSH_PASSWORD }}" ssh -o StrictHostKeyChecking=no medelvecina@192.168.0.14 '
-            cd /path/to/your/java/program
+            cd /Users/medelvecina/Documents/eclipse-workspace/planit-tech-assessment-031223
             export DISPLAY=:0
-            mvn test -Dtest=OpenChromeBrowser
+            mvn test -Dtestngpath="testng.xml"
           '
 
     env:
