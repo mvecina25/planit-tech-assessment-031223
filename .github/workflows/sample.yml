@@ -14,8 +14,8 @@ jobs:
     - name: Setup SSH
       uses: webfactory/ssh-agent@v0.4.1
       with:
-        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-        SSH_KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS }}
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+        ssh-known-hosts: ${{ secrets.SSH_KNOWN_HOSTS }}
 
     - name: Connect to Local Machine
       uses: appleboy/ssh-action@master
